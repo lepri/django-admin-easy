@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.urls import re_path
 from django.contrib import messages
 from django.http.response import HttpResponseRedirect
 
@@ -15,11 +15,11 @@ class MixinEasyViews(object):
         urls = super(MixinEasyViews, self).get_urls()
 
         easy_urls = [
-            url(r'^(?P<pk>.+)/easy/(?P<action>.+)/$', self.admin_site.admin_view(self.easy_object_view),
-                name='%s_%s_easy' % self._get_info()),
+            re_path(r'^(?P<pk>.+)/easy/(?P<action>.+)/$', self.admin_site.admin_view(self.easy_object_view),
+                    name='%s_%s_easy' % self._get_info()),
 
-            url(r'^easy/(?P<action>.+)/$', self.admin_site.admin_view(self.easy_list_view),
-                name='%s_%s_easy' % self._get_info()),
+            re_path(r'^easy/(?P<action>.+)/$', self.admin_site.admin_view(self.easy_list_view),
+                    name='%s_%s_easy' % self._get_info()),
         ]
 
         return easy_urls + urls
